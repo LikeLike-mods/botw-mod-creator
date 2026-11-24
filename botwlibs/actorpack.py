@@ -7,6 +7,9 @@ SORTIE = Path(r"C:\Users\maxch\Documents\Mcreator Botw\sortie\content\Actor\Pack
 
 class ActorPack:
     def __init__(self, name):
+        """
+        Prends le param 'name'
+        """
         self.name = name
 
         path = find_file(f"Actor/Pack/{name}.sbactorpack")
