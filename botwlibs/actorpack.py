@@ -2,6 +2,7 @@ from pathlib import Path
 import oead
 
 from .paths import find_file
+from .modbuilder import create_mod_folder
 
 OUTPUT = Path(r"C:\Users\maxch\Documents\Mcreator Botw\sortie\content\Actor\Pack")
 
@@ -33,12 +34,17 @@ class ActorPack:
         """
         self.writer.files[internal_path] = params.to_binary()
 
-    def save(self):
+    def save(self, mod_dir = None):
         """
         Save the file
         """
-        OUTPUT.mkdir(parents=True, exist_ok=True)
+        if mod_dir is None:
+            dest = OUTPUT
+        else:
+            dest = Path(mod_dir) / "content" / "Actor" / "Pack"
+        dest.mkdir(parents=True, exist_ok= True)
+        
         alignment, data = self.writer.write()
-        out = OUTPUT / f"{self.name}.sbactorpack"
+        out = dest / f"{self.name}.sbactorpack"
         out.write_bytes(oead.yaz0.compress(data, alignment))
         return out
