@@ -1,3 +1,4 @@
 sortie/
+/comparaison.py
 __pycache__/
 *.pyc

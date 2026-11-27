@@ -1,7 +1,7 @@
 from pathlib import Path
 
-UPDATE = Path(r"C:\Users\maxch\Documents\nin_games\The Legend of Zelda Breath of the Wild [Update] [0005000e101c9500]\content")
-GAME = Path(r"C:\Users\maxch\Documents\nin_games\The Legend of Zelda Breath of the Wild [Game] [00050000101c9500]\content")
+UPDATE = Path(r"")
+GAME = Path(r"")
 
 def find_file(relative_path):
     """

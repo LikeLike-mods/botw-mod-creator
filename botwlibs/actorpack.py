@@ -4,7 +4,7 @@ import oead
 from .paths import find_file
 from .modbuilder import create_mod_folder
 
-OUTPUT = Path(r"C:\Users\maxch\Documents\Mcreator Botw\sortie\content\Actor\Pack")
+OUTPUT = Path(r"")
 
 class ActorPack:
     def __init__(self, name):

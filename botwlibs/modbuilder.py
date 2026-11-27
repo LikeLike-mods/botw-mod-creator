@@ -1,6 +1,6 @@
 from pathlib import Path
 
-OUTPUT = Path(r"C:\Users\maxch\Documents\Mcreator Botw\sortie")
+OUTPUT = Path(r"")
 
 TITLE_IDS = "00050000101C9300,00050000101C9400,00050000101C9500"
 
