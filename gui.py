@@ -71,32 +71,34 @@ class App(tk.Tk):
         right = ttk.Frame(self, padding= 10)
         right.grid(row= 0, column= 1, sticky="nsew")
 
-        self.title_label = ttk.Label(
-            right, text="Choose a weapon", font=("Segoe UI", 12, "bold")
-        )
-        self.title_label.grid(row = 0, 
-                              column = 0, 
-                              columnspan = 2, 
-                              sticky="w", 
-                              pady=(0, 10))
+        
 
         for i, f in enumerate(self.fields, start=1):
             ttk.Label(right, text=f["label"]).grid(row=2 * i - 1, column=0, sticky="w")
-            var = tk.StringVar()
-            ttk.Entry(right, textvariable = var, width = 12).grid(
-                row=2 * i - 1, 
-                column=1, 
-                sticky="w", 
-                padx=8
-            )
+            if f["type"] == "bool":
+                var = tk.StringVar(value="False")
+                ttk.Combobox(right, textvariable=var, values=["True", "False"], state="readonly", width=10).grid(
+                    row=2*i-1,
+                    column=1,
+                    sticky="w",
+                    padx=8
+                )
+            else:
+                var = tk.StringVar()
+                ttk.Entry(right, textvariable = var, width = 12).grid(
+                    row=2*i-1, 
+                    column=1, 
+                    sticky="w", 
+                    padx=8
+                )
 
-            ttk.Label(
-                right, text=f["description"], foreground="gray", wraplength=450
-            ).grid(row = 2 * i, 
-                   column = 0, 
-                   columnspan = 2, 
-                   sticky ="w", 
-                   pady=(0, 6))
+            ttk.Label(right, text=f["description"], foreground="gray", wraplength=450
+                ).grid(row = 2 * i, 
+                    column = 0, 
+                    columnspan = 2, 
+                    sticky ="w", 
+                    pady=(0, 6)
+                )
 
             self.entries[f["id"]] = var
 
@@ -115,7 +117,7 @@ class App(tk.Tk):
 
         ttk.Entry(bottom, textvariable=self.mod_name, width=24).pack(side="left", padx=6)
 
-        ttk.Button(bottom, text="Genereted the mod", command=self._generate).pack(
+        ttk.Button(bottom, text="Genereted the mod", command=self.generate).pack(
             side="left", padx=6
         )
         self.status = ttk.Label(bottom, text="")
@@ -124,16 +126,20 @@ class App(tk.Tk):
     # --- actions ---
     def _on_select(self, event):
         selection = self.listbox.curselection()
+
         if not selection:
             return
+        
         name = self.listbox.get(selection[0])
+
         try:
             self.weapon = Weapon(name)
         except Exception as e:
-            messagebox.showerror("Erreur", f"Impossible d'ouvrir {name} :\n{e}")
+            messagebox.showerror("Error", f"Impossiblity to open {name} :\n{e}")
             return
 
         self.title_label.config(text=name)
+
         for f in self.fields:
             try:
                 value = self.weapon.get(f["id"])
@@ -144,7 +150,7 @@ class App(tk.Tk):
 
         self.status.config(text="")
 
-    def _generate(self):
+    def generate(self):
         if self.weapon is None:
             messagebox.showinfo("Info", "Choose a weapon")
             return
@@ -160,7 +166,14 @@ class App(tk.Tk):
                 if text == current:
                     continue  # don't touch what we have do
 
-                value = int(text) if f["type"] == "int" else float(text)
+
+                if f["type"] == "int":
+                    value = int(text)
+                elif f["type"] == "bool":
+                    bool(text)
+                else:
+                    float(text)
+                    
                 self.weapon.set(f["id"], value)
 
             name = self.mod_name.get().strip() or "MyMod"

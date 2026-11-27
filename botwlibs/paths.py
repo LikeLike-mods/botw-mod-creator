@@ -1,7 +1,6 @@
 from pathlib import Path
+from .data.game_paths import GAME, UPDATE
 
-UPDATE = Path(r"")
-GAME = Path(r"")
 
 def find_file(relative_path):
     """

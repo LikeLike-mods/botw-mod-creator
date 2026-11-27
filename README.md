@@ -5,8 +5,6 @@ Ver 0.0.06 \
   - Modify existing weapons ans test it in game
 
 # ADD YOUR OWN PATH FROM YOUR GAME!!!
-In botwlibs/paths.py (GAME & UPDATE!) \
-In botwlibs/actorpack.py (OUTPUT) \
-In botwlibs/modbuilder.py (OUTPUT)
+In botwlibs/data/game_-_paths.py (OUTPUT, GAME & UPDATE!)
 
 Run gui.py and enjoy!

@@ -3,8 +3,8 @@ import oead
 
 from .paths import find_file
 from .modbuilder import create_mod_folder
+from .data.game_paths import OUTPUT
 
-OUTPUT = Path(r"")
 
 class ActorPack:
     def __init__(self, name):

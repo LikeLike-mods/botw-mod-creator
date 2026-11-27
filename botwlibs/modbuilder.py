@@ -1,6 +1,5 @@
 from pathlib import Path
-
-OUTPUT = Path(r"")
+from .data.game_paths import OUTPUT
 
 TITLE_IDS = "00050000101C9300,00050000101C9400,00050000101C9500"
 

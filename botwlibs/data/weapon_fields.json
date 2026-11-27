@@ -66,5 +66,13 @@
     "max": 100,
     "label": "Sharp Weapon Percentage",
     "description": "Probability for a blue modifier to appear"
+  },
+  {
+    "id":"npc_terror",
+    "section": "WeaponCommon",
+    "param":"IsNotOnTerrorHold",
+    "type": "bool",
+    "label": "Npc Terror",
+    "description":" NPCs will shake in fear when you wield this weapon near them"
   }
 ]
