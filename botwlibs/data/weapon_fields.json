@@ -1,0 +1,70 @@
+[
+  {
+    "id": "attack", 
+    "section": "Attack", 
+    "param": "Power",
+    "type": "int", 
+    "min": 0, 
+    "max": 9999,
+    "label": "Damage",
+    "description": "Damage of the weapon"
+  },
+  {
+    "id": "durability", 
+    "section": "General", 
+    "param": "Life",
+    "type": "int", 
+    "min": 1, 
+    "max": 9999,
+    "label": "Durability",
+    "description": "Durability of the weapon"
+  },
+  {
+    "id": "sell_price", 
+    "section": "Item", 
+    "param": "SellingPrice",
+    "type": "int", 
+    "min": 0, 
+    "max": 99999,
+    "label": "Selling Price",
+    "description": "Selling Price of the weapon"
+  },
+  {
+    "id": "buy_price", 
+    "section": "Item", 
+    "param": "BuyingPrice",
+    "type": "int", "min": 0, "max": 99999,
+    "label": "Buying Price",
+    "description": "Buying Price of the weapon"
+  },
+  {
+    "id": "throw_range", 
+    "section": "WeaponCommon", 
+    "param": "ThrowRange",
+    "type": "float", 
+    "min": 0, 
+    "max": 100,
+    "label": "Throw Range",
+    "description": "Throw Range of the weapon"
+  },
+  {
+    "id": "guard_power", 
+    "section": "WeaponCommon", 
+    "param": "GuardPower",
+    "type": "int",
+    "min": 0,
+    "max": 999,
+    "label": "Guard Power",
+    "description": "Shields only: the higher this stat is, the less durability is lost when parrying"
+  },
+  {
+    "id": "blue_chance", 
+    "section": "WeaponCommon", 
+    "param": "SharpWeaponPer",
+    "type": "float", 
+    "min": 0, 
+    "max": 100,
+    "label": "Sharp Weapon Percentage",
+    "description": ""
+  }
+]

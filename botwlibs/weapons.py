@@ -1,5 +1,10 @@
 import oead
 from .actorpack import ActorPack
+from .weapon_fields import load_fields
+
+
+_TYPES = {"int": oead.S32, "float": oead.F32, "bool": bool}
+
 
 def _unwarp(value):
     return getattr(value, "v", value)
@@ -10,45 +15,54 @@ class Weapon:
         self.pack = ActorPack(name)
         self._path = f"Actor/GeneralParamList/{name}.bgparamlist"
         self._params = self.pack.get_params(self._path)
-
-
-    def _get(self, section, key):
-        return int(_unwarp(self._params.objects[section].params[key]))
-
-    def _set(self, section, key, value):
-        self._params.objects[section].params[key] = oead.S32(int(value))
+        self._fields = {f["id"]: f for f in load_fields()}
 
 
 
-    @property
-    def attack(self):
-        return self._get("Attack", "Power")
+    def _get(self, field_id) -> bool:
+        f = self._fields[field_id]
+        value = _unwarp(self._params.objects[f["section"]].params[f["param"]])
+        if f["type"] == "int":
+            return int(value)
+        if f["type"] == "float":
+            return float(value)
+        return bool(value)
 
-    @property
-    def durability(self):
-        return self._get("General", "Life")
+    def _set(self, field_id, value):
+        f = self._fields[field_id]
+        if f["type"] in ("int", "float"):
+            if value < f["min"] or value > f["max"]:
+                raise ValueError(f"{f['label']} must be beteen {f['min']} and {f['max']}.")
 
-    @property
-    def sell_price(self):
-        return self._get("Item", "SellingPrice")
+            value = int(value) if f["type"] == "int" else float(value)
+            
+        self._params.objects[f["section"]].params[f["param"]] = _TYPES[f["type"]](value)
 
-    @attack.setter
-    def attack(self, value):
-        if value < 0:
-            raise ValueError
-        self._set("Attack", "Power", value)
 
-    @durability.setter
-    def durability(self, value):
-        if value < 1:
-            raise ValueError
-        self._set("General", "Life", value)
+    def __getattr__(self, name):
+        fields = self.__dict__.get("_fields", {})
 
-    @sell_price.setter
-    def sell_price(self, value):
-        if value < 0:
-            raise ValueError
-        self._set("Item", "SellingPrice", value)
+        if name in fields:
+            return self.get(name)
+        
+        raise AttributeError(name)
+
+    def __setattr__(self, name, value):
+        fields = self.__dict__.get("_fields", {})
+
+        if name in fields:
+            self._set(name, value)
+        else:
+            object.__setattr__(self, name, value)
+
+
+    def describe(self):
+        return "\n".join(
+
+            f"{f['label']} : {self._get(fid)}  ({f['description']})"
+            for fid, f in self._fields.items()
+
+        )
 
     def save(self, mod_dir):
         self.pack.set_params(self._path, self._params)

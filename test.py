@@ -4,11 +4,14 @@ from botwlibs.weapons import Weapon
 mod_dir = create_mod_folder("MonMod_Epee", "Test : epee du voyageur modifiee")
 
 arme = Weapon("Weapon_Sword_001")
-print("Avant :", arme.attack, arme.durability, arme.sell_price)
+print("=== Avant ===")
+print(arme.describe())
 
 arme.attack = 50
 arme.durability = 100
-arme.sell_price = 9999
 
-print("Après :", arme.attack, arme.durability, arme.sell_price)
+print()
+print("=== Après ===")
+print(arme.describe())
+print()
 print("Écrit :", arme.save(mod_dir))
